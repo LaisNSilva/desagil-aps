@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class NandGateTest {
 
-    @DynamicTest
+    @Test
     public void whenReceivingFalseAndFalseShouldReturnTrue() {
         NandGate gate = new NandGate();
         gate.connect(0, new EmitterFalse());
