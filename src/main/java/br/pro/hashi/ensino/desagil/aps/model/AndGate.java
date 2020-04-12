@@ -26,7 +26,7 @@ public class AndGate extends Gate {
             throw new IndexOutOfBoundsException(inputIndex);
         } else if (inputIndex == 0) {
             nand1.connect(0, emitter);
-        } else{
+        } else {
             nand1.connect(1, emitter);
 
         }
