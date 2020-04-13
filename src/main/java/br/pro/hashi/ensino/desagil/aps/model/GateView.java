@@ -18,15 +18,15 @@ public class GateView extends JPanel implements ActionListener{
 
         entradaUmField = new JCheckBox();
         entradaUmField.setMnemonic (KeyEvent.VK_C);
-        entradaUmField.setSelected (true);
+        entradaUmField.setSelected (false);
 
         entradaDoisField = new JCheckBox();
         entradaDoisField.setMnemonic (KeyEvent.VK_C);
-        entradaDoisField.setSelected (true);
+        entradaDoisField.setSelected (false);
 
         saidaField = new JCheckBox();
         saidaField.setMnemonic (KeyEvent.VK_C);
-        saidaField.setSelected (true);
+        saidaField.setSelected (false);
 
 
 
@@ -52,12 +52,28 @@ public class GateView extends JPanel implements ActionListener{
     }
 
     private void update() {
-        Switch entradaUm;
-        Switch entradaDois;
+        int entradaUm;
+        int entradaDois;
+
+
+
+        int saida = gate.getInputSize(entradaUm);
     }
+
+    public void verificaValor(int entradaUm){
+        if(entradaUm == 1){
+            entradaUmField.turnOn();
+        }
+        else{
+            entradaUmField.turnOff();
+        }
+
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent event) {
+
         update();
     }
 
