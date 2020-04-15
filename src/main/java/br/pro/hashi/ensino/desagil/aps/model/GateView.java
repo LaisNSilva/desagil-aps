@@ -1,13 +1,17 @@
 package br.pro.hashi.ensino.desagil.aps.model;
 
 import javax.swing.*;
+import java.awt.event.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 
-public class GateView extends JPanel implements ActionListener{
+public class GateView extends JPanel implements ItemListener {
     private final Gate gate;
+    private final Switch entradaUm;
+    private final Switch entradaDois;
+
 
     private final JCheckBox entradaUmField;
     private final JCheckBox entradaDoisField;
@@ -15,6 +19,7 @@ public class GateView extends JPanel implements ActionListener{
 
     public GateView(Gate gate){
         this.gate = gate;
+
 
         entradaUmField = new JCheckBox();
         entradaUmField.setMnemonic (KeyEvent.VK_C);
@@ -27,6 +32,9 @@ public class GateView extends JPanel implements ActionListener{
         saidaField = new JCheckBox();
         saidaField.setMnemonic (KeyEvent.VK_C);
         saidaField.setSelected (false);
+
+        entradaUm= new Switch();
+        entradaDois = new Switch();
 
 
 
@@ -41,8 +49,11 @@ public class GateView extends JPanel implements ActionListener{
         add(saidaLabel);
         add(saidaField);
 
-        entradaUmField.addActionListener(this);
-        entradaDoisField.addActionListener(this);
+        gate.connect(0, entradaUm);
+        gate.connect(1, entradaDois);
+
+        entradaUmField.addItemListener(this);
+        entradaDoisField.addItemListener(this);
 
 
         saidaField.setEnabled(false);
@@ -52,32 +63,37 @@ public class GateView extends JPanel implements ActionListener{
     }
 
     private void update() {
-        int entradaUm;
-        int entradaDois;
+        boolean eUm;
+        boolean eDois;
 
+        eUm = entradaUmField.isSelected();
+        eDois = entradaDoisField.isSelected();
 
+        if (eUm == true && eDois == true){
+            entradaUm.turnOn();
+            entradaDois.turnOn();
+        } else if (eUm == true && eDois == false){
+            entradaUm.turnOn();
+            entradaDois.turnOff();
+        } else if (eUm == false && eDois == true){
+            entradaUm.turnOff();
+            entradaDois.turnOn();
 
-        int saida = gate.getInputSize(entradaUm);
-    }
-
-    public void verificaValor(int entradaUm){
-        if(entradaUm == 1){
-            entradaUmField.turnOn();
+        } else{
+            entradaUm.turnOff();
+            entradaDois.turnOff();
         }
-        else{
-            entradaUmField.turnOff();
-        }
 
+
+
+
+        saidaField.setSelected(this.gate.read());
     }
 
 
     @Override
-    public void actionPerformed(ActionEvent event) {
-
+    public void itemStateChanged(ItemEvent itemEvent) {
         update();
+
     }
-
-
-
-
 }
