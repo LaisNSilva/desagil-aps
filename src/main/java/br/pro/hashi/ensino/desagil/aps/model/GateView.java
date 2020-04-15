@@ -12,14 +12,12 @@ public class GateView extends JPanel implements ItemListener {
     private final Switch entradaUm;
     private final Switch entradaDois;
 
-
     private final JCheckBox entradaUmField;
     private final JCheckBox entradaDoisField;
     private final JCheckBox saidaField;
 
     public GateView(Gate gate){
         this.gate = gate;
-
 
         entradaUmField = new JCheckBox();
         entradaUmField.setMnemonic (KeyEvent.VK_C);
@@ -36,8 +34,6 @@ public class GateView extends JPanel implements ItemListener {
         entradaUm= new Switch();
         entradaDois = new Switch();
 
-
-
         JLabel entradaLabel = new JLabel("Entrada:");
         JLabel saidaLabel = new JLabel("Saída:");
 
@@ -49,17 +45,21 @@ public class GateView extends JPanel implements ItemListener {
         add(saidaLabel);
         add(saidaField);
 
-        gate.connect(0, entradaUm);
-        gate.connect(1, entradaDois);
+        if (gate.toString() == "NOT"){
+            gate.connect(0, entradaUm);
+            entradaDoisField.setEnabled(false);
+            remove(entradaDoisField);
+        } else {
+            gate.connect(0, entradaUm);
+            gate.connect(1, entradaDois);
+        }
 
         entradaUmField.addItemListener(this);
         entradaDoisField.addItemListener(this);
 
-
         saidaField.setEnabled(false);
 
         update();
-
     }
 
     private void update() {
@@ -83,9 +83,6 @@ public class GateView extends JPanel implements ItemListener {
             entradaUm.turnOff();
             entradaDois.turnOff();
         }
-
-
-
 
         saidaField.setSelected(this.gate.read());
     }
