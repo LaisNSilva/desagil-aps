@@ -1,10 +1,8 @@
 package br.pro.hashi.ensino.desagil.aps.model;
 
 import javax.swing.*;
-import java.awt.event.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 
 public class GateView extends JPanel implements ItemListener {
@@ -16,22 +14,22 @@ public class GateView extends JPanel implements ItemListener {
     private final JCheckBox entradaDoisField;
     private final JCheckBox saidaField;
 
-    public GateView(Gate gate){
+    public GateView(Gate gate) {
         this.gate = gate;
 
         entradaUmField = new JCheckBox();
-        entradaUmField.setMnemonic (KeyEvent.VK_C);
-        entradaUmField.setSelected (false);
+        entradaUmField.setMnemonic(KeyEvent.VK_C);
+        entradaUmField.setSelected(false);
 
         entradaDoisField = new JCheckBox();
-        entradaDoisField.setMnemonic (KeyEvent.VK_C);
-        entradaDoisField.setSelected (false);
+        entradaDoisField.setMnemonic(KeyEvent.VK_C);
+        entradaDoisField.setSelected(false);
 
         saidaField = new JCheckBox();
-        saidaField.setMnemonic (KeyEvent.VK_C);
-        saidaField.setSelected (false);
+        saidaField.setMnemonic(KeyEvent.VK_C);
+        saidaField.setSelected(false);
 
-        entradaUm= new Switch();
+        entradaUm = new Switch();
         entradaDois = new Switch();
 
         JLabel entradaLabel = new JLabel("Entrada:");
@@ -45,7 +43,7 @@ public class GateView extends JPanel implements ItemListener {
         add(saidaLabel);
         add(saidaField);
 
-        if (gate.toString() == "NOT"){
+        if (gate.toString().equals("NOT")) {
             gate.connect(0, entradaUm);
             entradaDoisField.setEnabled(false);
             remove(entradaDoisField);
@@ -69,17 +67,17 @@ public class GateView extends JPanel implements ItemListener {
         eUm = entradaUmField.isSelected();
         eDois = entradaDoisField.isSelected();
 
-        if (eUm == true && eDois == true){
+        if (eUm && eDois) {
             entradaUm.turnOn();
             entradaDois.turnOn();
-        } else if (eUm == true && eDois == false){
+        } else if (eUm) {
             entradaUm.turnOn();
             entradaDois.turnOff();
-        } else if (eUm == false && eDois == true){
+        } else if (eDois) {
             entradaUm.turnOff();
             entradaDois.turnOn();
 
-        } else{
+        } else {
             entradaUm.turnOff();
             entradaDois.turnOff();
         }
