@@ -10,6 +10,7 @@ public abstract class Gate implements Emitter, Receiver {
     }
 
     public String toString() {
+
         return name;
     }
 

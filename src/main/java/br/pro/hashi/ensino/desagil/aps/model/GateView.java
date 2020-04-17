@@ -4,33 +4,40 @@ import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.util.LinkedList;
 
 public class GateView extends JPanel implements ItemListener {
     private final Gate gate;
-    private final Switch entradaUm;
-    private final Switch entradaDois;
+    private final Switch switches[];
 
-    private final JCheckBox entradaUmField;
-    private final JCheckBox entradaDoisField;
+    private final JCheckBox entradas[];
     private final JCheckBox saidaField;
 
     public GateView(Gate gate) {
         this.gate = gate;
 
-        entradaUmField = new JCheckBox();
-        entradaUmField.setMnemonic(KeyEvent.VK_C);
-        entradaUmField.setSelected(false);
+        int a= 0;
+        switches = new Switch[gate.getInputSize()];
+        while (a < gate.getInputSize()){
+            switches[a]=new Switch();
+            a++;
+        }
 
-        entradaDoisField = new JCheckBox();
-        entradaDoisField.setMnemonic(KeyEvent.VK_C);
-        entradaDoisField.setSelected(false);
+        entradas = new JCheckBox[gate.getInputSize()];
+        int i = 0;
+        while (i < gate.getInputSize()){
+            entradas[i]=new JCheckBox();
+            entradas[i].setMnemonic(KeyEvent.VK_C);
+            entradas[i].setSelected(false);
+            i++;
+
+        }
+
 
         saidaField = new JCheckBox();
         saidaField.setMnemonic(KeyEvent.VK_C);
         saidaField.setSelected(false);
 
-        entradaUm = new Switch();
-        entradaDois = new Switch();
 
         JLabel entradaLabel = new JLabel("Entrada:");
         JLabel saidaLabel = new JLabel("Saída:");
@@ -38,49 +45,46 @@ public class GateView extends JPanel implements ItemListener {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         add(entradaLabel);
-        add(entradaUmField);
-        add(entradaDoisField);
+        int b= 0;
+        while (b< gate.getInputSize()){
+            add(entradas[b]);
+            b++;
+        }
+
         add(saidaLabel);
         add(saidaField);
 
-        if (gate.toString().equals("NOT")) {
-            gate.connect(0, entradaUm);
-            entradaDoisField.setEnabled(false);
-            remove(entradaDoisField);
-        } else {
-            gate.connect(0, entradaUm);
-            gate.connect(1, entradaDois);
+        int c=0;
+        while (c<gate.getInputSize()){
+            gate.connect(c, switches[c]);
+            c++;
         }
-
-        entradaUmField.addItemListener(this);
-        entradaDoisField.addItemListener(this);
 
         saidaField.setEnabled(false);
 
+        int d = 0;
+        while (d<gate.getInputSize() ){
+            entradas[d].addItemListener(this);
+            d++;
+        }
+
         update();
+
+
     }
 
     private void update() {
-        boolean eUm;
-        boolean eDois;
 
-        eUm = entradaUmField.isSelected();
-        eDois = entradaDoisField.isSelected();
-
-        if (eUm && eDois) {
-            entradaUm.turnOn();
-            entradaDois.turnOn();
-        } else if (eUm) {
-            entradaUm.turnOn();
-            entradaDois.turnOff();
-        } else if (eDois) {
-            entradaUm.turnOff();
-            entradaDois.turnOn();
-
-        } else {
-            entradaUm.turnOff();
-            entradaDois.turnOff();
+        int e =0;
+        while (e< entradas.length){
+            if (entradas[e].isSelected()== true) {
+                switches[e].turnOn();
+            } else{
+                switches[e].turnOff();
+            }
+            e++;
         }
+
 
         saidaField.setSelected(this.gate.read());
     }
