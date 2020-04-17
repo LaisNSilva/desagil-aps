@@ -1,9 +1,5 @@
 package br.pro.hashi.ensino.desagil.aps.model.model;
 
-import br.pro.hashi.ensino.desagil.aps.model.model.Emitter;
-import br.pro.hashi.ensino.desagil.aps.model.model.Gate;
-import br.pro.hashi.ensino.desagil.aps.model.model.NandGate;
-
 public class OrGate extends Gate {
     private final NandGate nand1;
     private final NandGate nand2;

@@ -1,7 +1,6 @@
 package br.pro.hashi.ensino.desagil.aps.model.view;
 
 import br.pro.hashi.ensino.desagil.aps.model.model.Gate;
-import br.pro.hashi.ensino.desagil.aps.model.view.GateView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

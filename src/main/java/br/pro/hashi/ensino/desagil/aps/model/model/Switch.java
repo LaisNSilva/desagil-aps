@@ -1,7 +1,5 @@
 package br.pro.hashi.ensino.desagil.aps.model.model;
 
-import br.pro.hashi.ensino.desagil.aps.model.model.Emitter;
-
 public class Switch implements Emitter {
     private boolean signal;
 

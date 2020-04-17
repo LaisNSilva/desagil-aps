@@ -18,17 +18,17 @@ public class GateView extends JPanel implements ItemListener {
     public GateView(Gate gate) {
         this.gate = gate;
 
-        int a= 0;
+        int a = 0;
         switches = new Switch[gate.getInputSize()];
-        while (a < gate.getInputSize()){
-            switches[a]=new Switch();
+        while (a < gate.getInputSize()) {
+            switches[a] = new Switch();
             a++;
         }
 
         entradas = new JCheckBox[gate.getInputSize()];
         int i = 0;
-        while (i < gate.getInputSize()){
-            entradas[i]=new JCheckBox();
+        while (i < gate.getInputSize()) {
+            entradas[i] = new JCheckBox();
             entradas[i].setMnemonic(KeyEvent.VK_C);
             entradas[i].setSelected(false);
             i++;
@@ -47,8 +47,8 @@ public class GateView extends JPanel implements ItemListener {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         add(entradaLabel);
-        int b= 0;
-        while (b< gate.getInputSize()){
+        int b = 0;
+        while (b < gate.getInputSize()) {
             add(entradas[b]);
             b++;
         }
@@ -56,8 +56,8 @@ public class GateView extends JPanel implements ItemListener {
         add(saidaLabel);
         add(saidaField);
 
-        int c=0;
-        while (c<gate.getInputSize()){
+        int c = 0;
+        while (c < gate.getInputSize()) {
             gate.connect(c, switches[c]);
             c++;
         }
@@ -65,7 +65,7 @@ public class GateView extends JPanel implements ItemListener {
         saidaField.setEnabled(false);
 
         int d = 0;
-        while (d<gate.getInputSize() ){
+        while (d < gate.getInputSize()) {
             entradas[d].addItemListener(this);
             d++;
         }
@@ -77,11 +77,11 @@ public class GateView extends JPanel implements ItemListener {
 
     private void update() {
 
-        int e =0;
-        while (e< entradas.length){
+        int e = 0;
+        while (e < entradas.length) {
             if (entradas[e].isSelected()) {
                 switches[e].turnOn();
-            } else{
+            } else {
                 switches[e].turnOff();
             }
             e++;
