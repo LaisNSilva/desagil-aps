@@ -1,16 +1,18 @@
-package br.pro.hashi.ensino.desagil.aps.model;
+package br.pro.hashi.ensino.desagil.aps.model.view;
+
+import br.pro.hashi.ensino.desagil.aps.model.model.Gate;
+import br.pro.hashi.ensino.desagil.aps.model.model.Switch;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
-import java.util.LinkedList;
 
 public class GateView extends JPanel implements ItemListener {
     private final Gate gate;
-    private final Switch switches[];
+    private final Switch[] switches;
 
-    private final JCheckBox entradas[];
+    private final JCheckBox[] entradas;
     private final JCheckBox saidaField;
 
     public GateView(Gate gate) {
@@ -77,7 +79,7 @@ public class GateView extends JPanel implements ItemListener {
 
         int e =0;
         while (e< entradas.length){
-            if (entradas[e].isSelected()== true) {
+            if (entradas[e].isSelected()) {
                 switches[e].turnOn();
             } else{
                 switches[e].turnOff();
