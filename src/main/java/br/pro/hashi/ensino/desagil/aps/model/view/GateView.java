@@ -1,6 +1,7 @@
 package br.pro.hashi.ensino.desagil.aps.model.view;
 
-import br.pro.hashi.ensino.desagil.aps.model.model.Emitter;
+// IMAGENS USADAS FORAM RETIRADAS DO SITE: https://pt.wikipedia.org/wiki/Porta_l%C3%B3gica
+
 import br.pro.hashi.ensino.desagil.aps.model.model.Gate;
 import br.pro.hashi.ensino.desagil.aps.model.model.Light;
 import br.pro.hashi.ensino.desagil.aps.model.model.Switch;
@@ -15,7 +16,6 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
     private final Switch[] switches;
 
     private final JCheckBox[] entradas;
-    private final JCheckBox saidaField;
     private final Image image;
     private final Light light;
 
@@ -37,25 +37,23 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
             entradas[i] = new JCheckBox();
             entradas[i].setMnemonic(KeyEvent.VK_C);
             entradas[i].setSelected(false);
-            if (gate.getInputSize()>1) {
+            if (gate.getInputSize() > 1) {
                 if (i == 0) {
                     add(entradas[i], 20, 87, 20, 25);
-                }
-                else if (i == 1) {
+                } else if (i == 1) {
                     add(entradas[i], 20, 127, 20, 25);
                 }
-            }
-            else if (gate.getInputSize()==1) {
-                    add(entradas[i], 20, 107, 20, 25);
+            } else if (gate.getInputSize() == 1) {
+                add(entradas[i], 20, 107, 20, 25);
             }
             i++;
         }
 
-        saidaField = new JCheckBox();
+        JCheckBox saidaField = new JCheckBox();
         saidaField.setMnemonic(KeyEvent.VK_C);
         saidaField.setSelected(false);
 
-        light = new Light(255,0,0);
+        light = new Light(255, 0, 0);
 
         String name = gate.toString() + ".png";
         URL url = getClass().getClassLoader().getResource(name);
@@ -104,7 +102,7 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
         int x = event.getX();
         int y = event.getY();
 
-        if (Math.pow(x-222, 2) + Math.pow(y-120, 2) <= 156.25) {
+        if (Math.pow(x - 222, 2) + Math.pow(y - 120, 2) <= 156.25) {
 
             // ...então abrimos a janela seletora de cor...
             Color color = JColorChooser.showDialog(this, null, light.getColor());
@@ -134,6 +132,7 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
     public void mouseExited(MouseEvent mouseEvent) {
 
     }
+
     @Override
     public void paintComponent(Graphics g) {
 
