@@ -1,6 +1,8 @@
 package br.pro.hashi.ensino.desagil.aps.model.view;
 
+import br.pro.hashi.ensino.desagil.aps.model.model.Emitter;
 import br.pro.hashi.ensino.desagil.aps.model.model.Gate;
+import br.pro.hashi.ensino.desagil.aps.model.model.Light;
 import br.pro.hashi.ensino.desagil.aps.model.model.Switch;
 
 import javax.swing.*;
@@ -15,14 +17,12 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
     private final JCheckBox[] entradas;
     private final JCheckBox saidaField;
     private final Image image;
-    private Color color;
+    private final Light light;
 
     public GateView(Gate gate) {
         super(245, 250);
 
         this.gate = gate;
-
-
 
         int a = 0;
         switches = new Switch[gate.getInputSize()];
@@ -39,56 +39,33 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
             entradas[i].setSelected(false);
             if (gate.getInputSize()>1) {
                 if (i == 0) {
-                    add(entradas[i], 10, 87, 30, 25);
+                    add(entradas[i], 20, 87, 20, 25);
                 }
                 else if (i == 1) {
-                    add(entradas[i], 10, 127, 30, 25);
+                    add(entradas[i], 20, 127, 20, 25);
                 }
             }
             else if (gate.getInputSize()==1) {
-                    add(entradas[i], 10, 107, 30, 25);
+                    add(entradas[i], 20, 107, 20, 25);
             }
             i++;
-
         }
-
 
         saidaField = new JCheckBox();
         saidaField.setMnemonic(KeyEvent.VK_C);
         saidaField.setSelected(false);
 
-
-
-        /*
-        JLabel entradaLabel = new JLabel("Entrada:");
-        JLabel saidaLabel = new JLabel("Saída:");
-        */
-
-        color = Color.BLACK;
-
+        light = new Light(255,0,0);
 
         String name = gate.toString() + ".png";
         URL url = getClass().getClassLoader().getResource(name);
         image = getToolkit().getImage(url);
 
-        /*
-        add(entradaLabel);
-        int b = 0;
-        while (b < gate.getInputSize()) {
-            add(entradas[b]);
-            b++;
-        }
-
-        add(saidaLabel);
-        add(saidaField);
-        */
         int c = 0;
         while (c < gate.getInputSize()) {
             gate.connect(c, switches[c]);
             c++;
         }
-
-        saidaField.setEnabled(false);
 
         int d = 0;
         while (d < gate.getInputSize()) {
@@ -99,8 +76,6 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
         addMouseListener(this);
 
         update();
-
-
     }
 
     private void update() {
@@ -115,32 +90,25 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
             e++;
         }
 
-
-        saidaField.setSelected(this.gate.read());
-        if (gate.read() == true){
-            color = Color.RED;
-        }
+        light.connect(0, this.gate);
+        repaint();
     }
-
 
     @Override
     public void itemStateChanged(ItemEvent itemEvent) {
         update();
-
     }
 
     @Override
     public void mouseClicked(MouseEvent event) {
-
-
         int x = event.getX();
         int y = event.getY();
 
-        // Se o clique foi dentro do quadrado colorido...
-        if (x >= 210 && x < 235 && y >= 150 && y < 170) {
+        if (Math.pow(x-222, 2) + Math.pow(y-120, 2) <= 156.25) {
 
             // ...então abrimos a janela seletora de cor...
-            color = JColorChooser.showDialog(this, null, color);
+            Color color = JColorChooser.showDialog(this, null, light.getColor());
+            light.setColor(color);
 
             // ...e chamamos repaint para atualizar a tela.
             repaint();
@@ -169,15 +137,13 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
     @Override
     public void paintComponent(Graphics g) {
 
-
         super.paintComponent(g);
 
         g.drawImage(image, 30, 70, 180, 100, this);
 
-        g.setColor(color);
-        g.fillRect(210, 108, 25, 25);
+        g.setColor(light.getColor());
+        g.fillOval(205, 107, 25, 25);
 
         getToolkit().sync();
     }
 }
-// 0-235  0-345
