@@ -102,7 +102,7 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
         int x = event.getX();
         int y = event.getY();
 
-        if (Math.pow(x - 217, 2) + Math.pow(y - 120, 2) <= 156.25) {
+        if (Math.pow(x - 222, 2) + Math.pow(y - 120, 2) <= 156.25) {
 
             // ...então abrimos a janela seletora de cor...
             Color color = JColorChooser.showDialog(this, null, light.getColor());
